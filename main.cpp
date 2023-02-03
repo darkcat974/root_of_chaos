@@ -44,9 +44,15 @@ int main()
     bg.setScale(1, 1);
     bg.setOrigin(sf::Vector2f(0, 0));
     bg.setTexture(bgtex, true);
- 
- 
-    // Enable the smooth filter. The texture appears smoother so that pixels are less noticeable.
+
+    //dragon
+    sf::Texture dragon;
+    dragon.loadFromFile("sprite/dragon.png");
+
+    sf::IntRect drake(0, 0, 300, 400);
+    sf::Sprite drag(dragon, drake);
+
+// Enable the smooth filter. The texture appears smoother so that pixels are less noticeable.
     texture.setSmooth(true);
 
     // _______________________________________
@@ -113,6 +119,16 @@ int main()
             }
         }
 
+        //ADD BY ME
+        if (timer.getElapsedTime().asSeconds() > 1.0f) {
+            if (drake.left == 600)
+                drake.left = 0;
+            else
+                drake.left += 300;
+            drag.setTextureRect(drake);
+            timer.restart();
+        }
+
         // Update coordinates
         if (leftFlag) x-=SPRITE_SPEED;
         if (rightFlag) x+=SPRITE_SPEED;
@@ -131,6 +147,7 @@ int main()
         // draw the sprite
         sprite.setPosition(x,y);
         window.draw(bg);
+        window.draw(drag);
         window.draw(sprite);
 
         // Update display and wait for vsync

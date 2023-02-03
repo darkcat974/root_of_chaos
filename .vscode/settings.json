@@ -51,5 +51,7 @@
         "streambuf": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp"
-    }
+    },
+    "editor.tabCompletion": "on",
+    "diffEditor.codeLens": true
 }
