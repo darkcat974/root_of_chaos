@@ -35,6 +35,17 @@ int main()
         std::cerr << "Error while loading texture" << std::endl;
         return -1;
     }
+
+    //ADDING BY ME
+    sf::Texture bgtex;
+    bgtex.loadFromFile("sprite/map.jpg");
+
+    sf::Sprite bg;
+    bg.setScale(1, 1);
+    bg.setOrigin(sf::Vector2f(0, 0));
+    bg.setTexture(bgtex, true);
+ 
+ 
     // Enable the smooth filter. The texture appears smoother so that pixels are less noticeable.
     texture.setSmooth(true);
 
@@ -119,6 +130,7 @@ int main()
 
         // draw the sprite
         sprite.setPosition(x,y);
+        window.draw(bg);
         window.draw(sprite);
 
         // Update display and wait for vsync
