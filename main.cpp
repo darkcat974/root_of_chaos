@@ -1,8 +1,11 @@
 #include "include/my.hpp"
 
-int main(void)
+int main()
 {
-    sf::Window window(sf::VideoMode(800, 600), "root_of_chaos");
+    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::CircleShape shape(100.f);
+    shape.setFillColor(sf::Color::Green);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -11,6 +14,9 @@ int main(void)
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+        window.clear();
+        window.display();
     }
 
     return 0;
