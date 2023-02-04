@@ -6,11 +6,60 @@
 */
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include "./include/root.hpp"
+
+enum game click_menu(sf::Sprite sprite, sf::Texture texture, enum game play)
+{
+    sf::Texture texture2;
+    texture2.loadFromFile("images/PLAY2.png");
+    sf::Vector2i move = sf::Mouse::getPosition();
+
+    sf::FloatRect rect = sprite.getGlobalBounds();
+    if (rect.contains(move.x, move.y)) {
+        sprite.setTexture(texture2);
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            return GAME;
+        }
+    }
+    return play;
+}
+
+enum game click_credits(sf::Sprite sprite, enum game play)
+{
+    sf::Texture texture2;
+    sf::Vector2i move = sf::Mouse::getPosition();
+
+    sf::FloatRect rect = sprite.getGlobalBounds();
+    if (rect.contains(move.x, move.y)) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            return CREDITS;
+        }
+    }
+    return play;
+}
+
+void click_quit(sf::Sprite sprite)
+{
+    sf::Texture texture2;
+    sf::Vector2i move = sf::Mouse::getPosition();
+
+    sf::FloatRect rect = sprite.getGlobalBounds();
+    rect.width = 319;
+    rect.height = 177;
+    if (rect.contains(move.x, move.y)) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            exit(0);
+        }
+    }
+}
 
 int main(void)
 {
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Tutotrial", sf::Style::Close | sf::Style::Fullscreen);
+    game play = MENU;
+    sf::RenderWindow window;
+    window.create(sf::VideoMode(1920, 1080), "SFML Tutotrial", sf::Style::Close | sf::Style::Fullscreen);
+
 
     sf::Texture texture1;
     texture1.loadFromFile("images/PLAY1.png");
@@ -44,13 +93,6 @@ int main(void)
     fond.setPosition(sf::Vector2f(0, 0));
     fond.setScale(sf::Vector2f(1, 1));
 
-    // bool playbuttonselected;
-    // bool playbuttonpressed;
-    // bool creditsbuttonselected;
-    // bool creditsbuttonpressed;
-    // bool quitbuttonselected;
-    // bool quitbuttonpressed;
-
     while (window.isOpen())
     {
         sf::Event event;
@@ -60,10 +102,21 @@ int main(void)
                 window.close();
         }
         window.clear();
-        window.draw(fond);
-        window.draw(play1);
-        window.draw(credits1);
-        window.draw(qui1);
+        if (play == MENU) {
+            window.draw(fond);
+            play = click_menu(play1, texture1, play);
+            window.draw(play1);
+            play = click_credits(credits1, play);
+            window.draw(credits1);
+            window.draw(qui1);
+        }
+        if (play == GAME) {
+            window.clear(sf::Color::Red);
+        }
+        if (play == CREDITS) {
+            window.clear(sf::Color::Blue);
+        }
+        click_quit(qui1);
         window.display();
     }
     return 0;

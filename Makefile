@@ -9,13 +9,9 @@ SRC	=	$(wildcard *.cpp)
 
 OBJ	=	$(SRC:.cpp=.o)
 
-# IFLAGS	=	-I./include
-
-# LFLAGS	=	-L./lib/my/ -lmy
+IFLAGS	=	-I./include
 
 CFLAGS 	=	-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-
-# NFLAGS	=	-W -Wall -Werror -Wextra
 
 NAME	=	root
 
@@ -23,7 +19,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 			g++ -c main.cpp
-			g++ -o $(NAME) $(OBJ) $(CFLAGS)
+			g++ -o $(NAME) $(OBJ) $(CFLAGS) $(IFLAGS)
 
 clean:
 			rm -f $(OBJ)

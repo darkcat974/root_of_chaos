@@ -8,12 +8,17 @@
 #ifndef ROOT_H_
 #define ROOT_H_
 
+#include <iostream>
+using namespace std;
+
 enum game {
     MENU,
     CREDITS,
+    GAME,
     HELP,
     QUIT,
 };
+
 
 class MainMenu
 {
