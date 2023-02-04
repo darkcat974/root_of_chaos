@@ -1,18 +1,16 @@
 SRC = $(wildcard *.cpp)
 
-OBJ = $(SRC:.c=.o)
-
 CFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -Iinclude
 
 NAME = root_of_chaos
 
 all:
-	g++ -o $(NAME) $(OBJ) $(CFLAGS)
+	g++ -o $(NAME) $(SRC) $(CFLAGS)
 
 clean:
-	rm -rf $(OBJ)
+	rm -rf $(wildcard *~)
 
-fclean: clean
+fclean:
 	rm -rf $(NAME)
 
 re: fclean all

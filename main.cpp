@@ -1,6 +1,9 @@
+// SFML libraries
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <math.h>
 #include "include/my.hpp"
 #include <iostream>
-#include <SFML/Graphics.hpp>
 
 class Player
 {
@@ -30,8 +33,76 @@ class Player
         sf::Time _AnimTime; //Player Animation Time
 };
 
-int main(void)
-{
+    // _____________________
+    // ::: Create window :::
+
+    // Create a window with the same pixel depth as the desktop
+    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+
+    sf::RenderWindow window(sf::VideoMode(  desktopMode.width,
+                                            desktopMode.height,
+                                            desktopMode.bitsPerPixel),
+                            "SFML part 3",
+                            sf::Style::Fullscreen);
+
+    // Enable vertical sync. (vsync)
+    window.setVerticalSyncEnabled (true);
+    // When a key is pressed, sf::Event::KeyPressed will be true only once
+    window.setKeyRepeatEnabled(false);
+
+    // ____________________
+    // ::: Load texture :::
+
+    // Create texture from PNG file
+    sf::Texture texture;
+    if (!texture.loadFromFile("sprite/images.jpeg"))
+    {
+        std::cerr << "Error while loading texture" << std::endl;
+        return -1;
+    }
+
+    //ADDING BY ME
+    sf::Texture bgtex;
+    bgtex.loadFromFile("sprite/map.jpg");
+
+    sf::Sprite bg;
+    bg.setScale(1, 1);
+    bg.setOrigin(sf::Vector2f(0, 0));
+    bg.setTexture(bgtex, true);
+
+    //dragon
+    sf::Texture dragon;
+    dragon.loadFromFile("sprite/dragon.png");
+
+    sf::IntRect drake(0, 0, 300, 400);
+    sf::Sprite drag(dragon, drake);
+
+// Enable the smooth filter. The texture appears smoother so that pixels are less noticeable.
+    texture.setSmooth(true);
+
+    // _______________________________________
+    // ::: Create sprite and apply texture :::
+
+    // Create the sprite and apply the texture
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    sf::FloatRect spriteSize=sprite.getGlobalBounds();
+    sprite.setOrigin(spriteSize.width/2.,spriteSize.height/2.);
+
+        // _________________
+    // ::: Main loop :::
+
+    // Sprite coordinates
+    int x=window.getSize().x/2.;
+    int y=window.getSize().y/2.;
+
+    // Flags for key pressed
+    bool upFlag=false;
+    bool downFlag=false;
+    bool leftFlag=false;
+    bool rightFlag=false;
+
+    sf::Clock timer;
     sf::Window window(sf::VideoMode(800, 600), "root_of_chaos");
 sf::Texture playerTexture;
     if(!playerTexture.loadFromFile("IMAGE/playerSprite.png"))
@@ -41,14 +112,7 @@ sf::Texture playerTexture;
     Player player(playerTexture); //Player
 
     //Game Loop
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+
 
        window.clear //Clear Window
 
@@ -74,6 +138,3 @@ sf::Texture playerTexture;
         window.draw(player.getSprite()); //Draw Player Sprite
         window.display(); //Display Window
     }
-
-    return 0;
-}
