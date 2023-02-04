@@ -60,8 +60,8 @@ sf::Sprite &Sprite::sprite_gen2(std::string path, sf::Vector2f position, sf::Vec
 void  Options::game_loop()
 {
     Sprite for_sprite;
-    for_sprite.sprite_gen2("asset/play_blue.png", V2F(0, 0), V2F(0.5, 0.5));
-    for_sprite.sprite_gen("asset/last_choise_map1.png", V2F(0, -20), V2F(2.2, 2));
+    for_sprite.sprite_gen2("asset/Shadow_Isles_concept_3.png", V2F(0, 0), V2F(0.41, 0.41));
+    for_sprite.sprite_gen("asset/platform_map1.png", V2F(0, -100), V2F(1, 0.58));
     while (window.isOpen())
     {
         sf::Event event;
@@ -72,8 +72,8 @@ void  Options::game_loop()
         }
 
         window.clear();
-        window.draw(for_sprite.entity);
         window.draw(for_sprite.entity2);
+        window.draw(for_sprite.entity);
         window.display();
     }
 }
