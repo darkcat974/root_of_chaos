@@ -4,8 +4,6 @@
 #include <SFML/System.hpp>
 #include <iostream>
 
-using namespace sf;
-
 Options::Options()
 {
 }
@@ -14,33 +12,28 @@ Options::~Options()
 {
 }
 
-//sf::RenderWindow screen(void) 
-//{
-//    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
-//    sf::RenderWindow window(sf::VideoMode(  desktopMode.width, desktopMode.height, desktopMode.bitsPerPixel), "SFML part 3", 
-//    sf::Style::Fullscreen);
-//}
-
-sf::RenderWindow &Options::screen(VideoMode videomode)
+sf::RenderWindow &Options::screen(sf::VideoMode videomode)
 {
     this->height = videomode.height;
     this->width = videomode.width;;
     this->pix = videomode.bitsPerPixel;
-    this->window.create(VideoMode(this->width ,this->height, this->pix), "root_of_chaos", Style::Resize | Style::Close);
+    this->window.create(sf::VideoMode(this->width ,this->height, this->pix), "root_of_chaos", sf::Style::Resize | sf::Style::Close);
     return window;
 }
 
-void  Options::game_loop()
+sf::Sprite &Options::sprite_gen(std::string path)
 {
-    sf::Texture background;
-    sf::Sprite sprite_test;
-    if(!background.loadFromFile("asset/menu.png"))
+    if(!background.loadFromFile(path))
     {
         std::cout << "Erreur de chargement" <<  std::endl;
     }
     background.setSmooth(true);
-    sprite_test.setTexture(background);
+    this->entity.setTexture(background);
+    return entity;
+}
 
+void  Options::game_loop()
+{
     while (window.isOpen())
     {
         sf::Event event;
@@ -51,7 +44,7 @@ void  Options::game_loop()
         }
 
         window.clear();
-        window.draw(sprite_test);
+        window.draw(entity);
         window.display();
     }
 }
@@ -59,7 +52,8 @@ void  Options::game_loop()
 int main()
 {
     Options for_screen;
-    for_screen.screen(VideoMode::getDesktopMode());
+    for_screen.screen(sf::VideoMode::getDesktopMode());
+    for_screen.sprite_gen("asset/menu.png");
     for_screen.game_loop();
     return 0;
 }
