@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-SRC	=	main.cpp
+SRC	=	$(wildcard *.cpp)
 
 OBJ	=	$(SRC:.cpp=.o)
 
