@@ -26,13 +26,12 @@ sf::RenderWindow &Options::screen(VideoMode videomode)
     this->height = videomode.height;
     this->width = videomode.width;;
     this->pix = videomode.bitsPerPixel;
-    this->window.create(VideoMode(this->width ,this->height, this->pix), "root_of_chaos", Style::Close);
+    this->window.create(VideoMode(this->width ,this->height, this->pix), "root_of_chaos", Style::Resize | Style::Close);
     return window;
 }
 
 void  Options::game_loop()
 {
-
     sf::Texture background;
     sf::Sprite sprite_test;
     if(!background.loadFromFile("asset/menu.png"))
