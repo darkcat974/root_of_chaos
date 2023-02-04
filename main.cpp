@@ -2,12 +2,37 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <math.h>
+#include "include/my.hpp"
+#include <iostream>
 
-// Sprite speed (high values = high speed)
-#define         SPRITE_SPEED        5
-
-int main()
+class Player
 {
+    public:
+        Player(); //Constructor
+        Player(sf::Texture&); //Overload Constructor
+        ~Player(); //Destructor
+
+        //PLAYER MOVEMENT FUNCTIONS
+        void moveUp();
+        void moveDown();
+        void moveRight();
+        void moveLeft();
+        void setSpeed(float, sf::Time);
+
+        //ACCESSOR FUNCTIONS
+        sf::Sprite getSprite() const;
+
+    private:
+        sf::Sprite _Sprite; //Declare Player Sprite
+        sf::Vector2i _Source; //Declare Source (Sprite Sheet Crop)
+        enum _Direction{ Down, Left, Right, Up }; //Declare Direction Enumeration
+
+        //ANIMATION DATA
+        float _Speed; //Player Speed
+        sf::Clock _AnimClock; //Player Animation Clock
+        sf::Time _AnimTime; //Player Animation Time
+};
+
     // _____________________
     // ::: Create window :::
 
@@ -78,80 +103,38 @@ int main()
     bool rightFlag=false;
 
     sf::Clock timer;
-    while (window.isOpen())
-    {
-        // Process events
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            // Close the window if a key is pressed or if requested
-            if (event.type == sf::Event::Closed) window.close();
+    sf::Window window(sf::VideoMode(800, 600), "root_of_chaos");
+sf::Texture playerTexture;
+    if(!playerTexture.loadFromFile("IMAGE/playerSprite.png"))
+        std::cout << "Texture Error" << std::endl;
 
-            // If a key is pressed
-            if (event.type == sf::Event::KeyPressed)
-            {
-                switch (event.key.code)
-                {
-                // If escape is pressed, close the application
-                case  sf::Keyboard::Escape : window.close(); break;
+    //OBJECTS
+    Player player(playerTexture); //Player
 
-                // Process the up, down, left and right keys
-                case sf::Keyboard::Up :     upFlag=true; break;
-                case sf::Keyboard::Down:    downFlag=true; break;
-                case sf::Keyboard::Left:    leftFlag=true; break;
-                case sf::Keyboard::Right:   rightFlag=true; break;
-                default : break;
-                }
-            }
+    //Game Loop
 
-            // If a key is released
-            if (event.type == sf::Event::KeyReleased)
-            {
-                switch (event.key.code)
-                {
-                // Process the up, down, left and right keys
-                case sf::Keyboard::Up :     upFlag=false; break;
-                case sf::Keyboard::Down:    downFlag=false; break;
-                case sf::Keyboard::Left:    leftFlag=false; break;
-                case sf::Keyboard::Right:   rightFlag=false; break;
-                default : break;
-                }
-            }
-        }
 
-        //ADD BY ME
-        if (timer.getElapsedTime().asSeconds() > 1.0f) {
-            if (drake.left == 600)
-                drake.left = 0;
-            else
-                drake.left += 300;
-            drag.setTextureRect(drake);
-            timer.restart();
-        }
+       window.clear //Clear Window
 
-        // Update coordinates
-        if (leftFlag) x-=SPRITE_SPEED;
-        if (rightFlag) x+=SPRITE_SPEED;
-        if (upFlag) y-=SPRITE_SPEED;
-        if (downFlag) y+=SPRITE_SPEED;
+        //PLAYER MOVEMENT
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) //Move Up
+            player.moveUp();
 
-        // Check screen boundaries
-        if (x<0) x=0;
-        if (x>(int)window.getSize().x) x=window.getSize().x;
-        if (y<0) y=0;
-        if (y>(int)window.getSize().y) y=window.getSize().y;
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)) //Move Down
+            player.moveDown();
 
-        // Clear the window and apply grey background
-        window.clear( sf::Color(127,127,127));
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) //Move Right
+            player.moveRight();
 
-        // draw the sprite
-        sprite.setPosition(x,y);
-        window.draw(bg);
-        window.draw(drag);
-        window.draw(sprite);
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) //Move Left
+            player.moveLeft();
 
-        // Update display and wait for vsync
-        window.display();
+        //SPRINT
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+            player.setSpeed(0.35, sf::milliseconds(50));
+        else
+            player.setSpeed(0.20, sf::milliseconds(80));
+
+        window.draw(player.getSprite()); //Draw Player Sprite
+        window.display(); //Display Window
     }
-    return 0;
-}
