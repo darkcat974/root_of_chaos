@@ -109,8 +109,8 @@
     ],
     "project": "test_map.tiled-project",
     "recentFiles": [
-        "Tilemap.tsx",
         "H2lXLM.tsx",
+        "Tilemap.tsx",
         "platform_map2.tmx",
         "platform_map1.tmx",
         "transition_zone.tmx",
