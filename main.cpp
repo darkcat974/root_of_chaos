@@ -75,12 +75,12 @@ sf::Sprite &Sprite::sprite_gen3(std::string path, sf::Vector2f position, sf::Vec
 void  Options::game_loop()
 {
     Sprite for_sprite;
-    int x=window.getSize().x/2.;
+    int x= 0;
     int y=window.getSize().y/2.;
     for_sprite.sprite_gen3("asset/images.jpeg", V2F(0, 0), V2F(0.41, 0.41));
     for_sprite.sprite_gen2("asset/Shadow_Isles_concept_3.png", V2F(0, 0), V2F(0.41, 0.41));
-    for_sprite.sprite_gen("asset/last_choise_map1.png", V2F(0, -100), V2F(1, 0.58));
-    sf::Vector2f pos = for_sprite.entity.getPosition();
+    for_sprite.sprite_gen("asset/last_choise_map1.png", V2F(0, -100), V2F(5, 1));
+    //sf::Vector2f pos = for_sprite.entity.getPosition();
     
     while (window.isOpen())
     {
@@ -127,8 +127,13 @@ void  Options::game_loop()
                default : break;
                }
             }
-            if (pos.x > 1920) {
-                for_sprite.entity2.setPosition(x, 0);
+            if (x > 1920) {
+                for_sprite.entity2.setPosition(0, 0);
+                x = 0;
+            }
+            if (x < -1920) {
+                for_sprite.entity2.setPosition(0, 0);
+                x = 0;
             }
         window.clear();
         for_sprite.entity2.setPosition(x, 0);
