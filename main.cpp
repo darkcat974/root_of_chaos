@@ -91,7 +91,7 @@ void  Options::game_loop()
     Sprite for_sprite;
     int x= 0;
     int y=window.getSize().y/2.;
-    for_sprite.sprite_gen3("asset/images.jpeg", V2F(0, 900), V2F(0.41, 0.41));
+    for_sprite.sprite_gen3("asset/images.png", V2F(0, 900), V2F(0.41, 0.41));
     for_sprite.sprite_gen2("asset/yes.png", V2F(0, 0), V2F(0.41, 0.41));
     for_sprite.sprite_gen("asset/last_choise_map1.png", V2F(0, -100), V2F(2, 1.5));
     for_sprite.sprite_gen4("asset/Shadow_Isles_concept_3.png", V2F(0, -100), V2F(1, 0));
@@ -103,7 +103,6 @@ void  Options::game_loop()
     {
         bool upFlag=false;
         bool downFlag=false;
-        bool leftFlag=false;
         bool rightFlag=false;
         sf::Event event;
         while (window.pollEvent(event))
@@ -120,12 +119,10 @@ void  Options::game_loop()
                // Process the up, down, left and right keys
                case sf::Keyboard::Up :     upFlag=true; break;
                case sf::Keyboard::Down:    downFlag=true; break;
-               case sf::Keyboard::Left:    leftFlag=true; break;
                case sf::Keyboard::Right:   rightFlag=true; break;
                default : break;
                }
-                if (leftFlag) x-=SPRITE_SPEED;
-                if (rightFlag) x+=SPRITE_SPEED;
+                if (rightFlag) x-=SPRITE_SPEED;
                 if (upFlag) y-=SPRITE_SPEED;
                 if (downFlag) y+=SPRITE_SPEED;  
            }
@@ -139,7 +136,6 @@ void  Options::game_loop()
                // Process the up, down, left and right keys
                //case sf::Keyboard::Up :     upFlag=true; break;
                //case sf::Keyboard::Down:    downFlag=true; break;
-               case sf::Keyboard::Left:    leftFlag=true; break;
                case sf::Keyboard::Right:   rightFlag=true; break;
                default : break;
                }
@@ -155,7 +151,7 @@ void  Options::game_loop()
         window.clear();
         for_sprite.entity2.setPosition(x, 0);
         for_sprite.entity.setPosition(x, 235);
-        for_sprite.entity4.setPosition()
+        //for_sprite.entity4.setPosition()
         window.draw(for_sprite.entity2);
         window.draw(for_sprite.entity);
         window.draw(for_sprite.entity3);
