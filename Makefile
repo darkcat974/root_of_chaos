@@ -1,16 +1,31 @@
-SRC = $(wildcard *.cpp)
+##
+## EPITECH PROJECT, 2022
+## Makefile
+## File description:
+## Makefile
+##
 
-CFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -Iinclude
+CC = g++
 
-NAME = root_of_chaos
+SRC = 	$(shell find . -type f -name '*.cpp')
 
-all:
-	g++ -o $(NAME) $(SRC) $(CFLAGS)
+CFLAGS = -W -Werror -Wall -Wextra
+
+OBJ	=	$(SRC:.cpp=.o)
+
+LFLAGS = -lsfml-graphics -lsfml-audio -lsfml-system -lsfml-window
+
+NAME	=	root_of_chaos
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	g++ $(SRC) -o $(NAME) $(CFLAGS) $(LFLAGS)
 
 clean:
-	rm -rf $(wildcard *~)
+	rm -f $(OBJ)
 
-fclean:
-	rm -rf $(NAME)
+fclean: clean
+	rm -f $(NAME)
 
-re: fclean all
+re: clean all
