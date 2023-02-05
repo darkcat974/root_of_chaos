@@ -31,12 +31,15 @@ public:
     ~Sprite();
     sf::Sprite &sprite_gen(std::string path, sf::Vector2f, sf::Vector2f);
     sf::Sprite &sprite_gen2(std::string path, sf::Vector2f, sf::Vector2f);
+    sf::Sprite &sprite_gen3(std::string path, sf::Vector2f, sf::Vector2f);
     void game_loop();
 
     sf::Texture background;
     sf::Sprite entity;
     sf::Texture play;
     sf::Sprite entity2;
+    sf::Texture player;
+    sf::Sprite entity3;
 
 private:
     sf::RenderWindow window;
