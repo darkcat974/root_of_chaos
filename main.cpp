@@ -72,15 +72,32 @@ sf::Sprite &Sprite::sprite_gen3(std::string path, sf::Vector2f position, sf::Vec
     return entity3;
 }
 
+sf::Sprite &Sprite::sprite_gen4(std::string path, sf::Vector2f position, sf::Vector2f size)
+{
+    if(!background2.loadFromFile(path))
+    {
+        std::cout << "Erreur de chargement" <<  std::endl;
+    }
+    background2.setSmooth(true);
+
+    this->entity4.setPosition(position);
+    this->entity4.setScale(size);
+    this->entity4.setTexture(background2);
+    return entity4;
+}
+
 void  Options::game_loop()
 {
     Sprite for_sprite;
     int x= 0;
     int y=window.getSize().y/2.;
-    for_sprite.sprite_gen3("asset/images.jpeg", V2F(0, 0), V2F(0.41, 0.41));
-    for_sprite.sprite_gen2("asset/Shadow_Isles_concept_3.png", V2F(0, 0), V2F(0.41, 0.41));
-    for_sprite.sprite_gen("asset/last_choise_map1.png", V2F(0, -100), V2F(5, 1));
+    for_sprite.sprite_gen3("asset/images.jpeg", V2F(0, 900), V2F(0.41, 0.41));
+    for_sprite.sprite_gen2("asset/yes.png", V2F(0, 0), V2F(0.41, 0.41));
+    for_sprite.sprite_gen("asset/last_choise_map1.png", V2F(0, -100), V2F(2, 1.5));
+    for_sprite.sprite_gen4("asset/Shadow_Isles_concept_3.png", V2F(0, -100), V2F(1, 0));
     //sf::Vector2f pos = for_sprite.entity.getPosition();
+    sf::VideoMode videomode = sf::VideoMode::getDesktopMode();
+    int width = videomode.width;
     
     while (window.isOpen())
     {
@@ -120,27 +137,29 @@ void  Options::game_loop()
                // If escape is pressed, close the application
                case  sf::Keyboard::Escape : window.close(); break;
                // Process the up, down, left and right keys
-               case sf::Keyboard::Up :     upFlag=true; break;
-               case sf::Keyboard::Down:    downFlag=true; break;
+               //case sf::Keyboard::Up :     upFlag=true; break;
+               //case sf::Keyboard::Down:    downFlag=true; break;
                case sf::Keyboard::Left:    leftFlag=true; break;
                case sf::Keyboard::Right:   rightFlag=true; break;
                default : break;
                }
             }
-            if (x > 1920) {
+            if (x > width) {
                 for_sprite.entity2.setPosition(0, 0);
                 x = 0;
             }
-            if (x < -1920) {
+            if (x < -width) {
                 for_sprite.entity2.setPosition(0, 0);
                 x = 0;
             }
         window.clear();
         for_sprite.entity2.setPosition(x, 0);
-        for_sprite.entity.setPosition(x, y);
+        for_sprite.entity.setPosition(x, 235);
+        for_sprite.entity4.setPosition()
         window.draw(for_sprite.entity2);
         window.draw(for_sprite.entity);
         window.draw(for_sprite.entity3);
+        window.draw(for_sprite.entity4);
         window.display();
     }
 }
