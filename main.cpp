@@ -46,9 +46,9 @@ enum game click_credits(sf::Sprite sprite, enum game play)
     return play;
 }
 
-enum game click_help(sf::Sprite sprite, enum game play)
+enum game click_help(sf::Sprite sprite, enum game play, sf::RenderWindow *window)
 {
-    sf::Vector2i move = sf::Mouse::getPosition();
+    sf::Vector2i move = sf::Mouse::getPosition((*window));
 
     sf::FloatRect rect = sprite.getGlobalBounds();
     if (rect.contains(move.x, move.y)) {
@@ -147,7 +147,7 @@ int main(void)
         window.clear();
         if (play == MENU) {
             window.draw(fond);
-            play = click_help(h, play);
+            play = click_help(h, play, &window);
             window.draw(h);
             play = click_menu(play1, texture1, play);
             window.draw(play1);
